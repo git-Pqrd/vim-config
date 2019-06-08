@@ -1,0 +1,15 @@
+snippet reader "description"
+with open('./${1}', 'r', encoding="utf-8") as csvfile:
+    reader = csv.reader(csvfile, delimiter=",")
+    for row in reader:
+        print(row)
+endsnippet
+
+
+
+snippet writer "description"
+with open('./${1}', 'a', encoding="utf-8") as csvfile:
+    writer = csv.writer(csvfile, delimiter=",")
+    for row in ${2}:
+        ${3}
+endsnippet

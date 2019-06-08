@@ -5,4 +5,71 @@ justify-content : center ;
 flex-direction : column ;
 flex-wrap : wrap ;
 endsnippet
+
+snippet transition "transition . .s ease-in-out"
+-webkit-transition: ${1:all} $2s ease-out;
+-moz-transition: $1 $2s ease-out;
+-o-transition: $1 $2s ease-out;
+transition: $1 $2s ease-out; 
+endsnippet
+
+snippet media "@media .px"
+@media only screen and ( max-width : ${1:600}px) {$2}
+endsnippet
+
+
+snippet complex-grid "complex nested.grid"
+  .grid-box {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    height: 600px;
+    width: 100%;
+    grid-gap : 40px ;
+    .box {
+      height: 100%;
+      width: 100%;
+      border: solid 1px red;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-template-rows: repeat(6, 1fr);
+    }
+    .box-1 {
+      .box-img {
+        border : solid black 2px ;
+        grid-column-start: 1;
+        grid-column-end: 5;
+        grid-row-start: 1;
+        grid-row-end: 7;
+      }
+      .text-box {
+        border : solid black 2px ;
+        grid-column-start: 4;
+        grid-column-end: 6;
+        grid-row-start: 3;
+        grid-row-end: 6;
+      }
+    }
+  }
+
+endsnippet
+  
+
+snippet grid-simple "simple easy grid" b
+  .$1 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap : 40px ;
+    .box {
+        grid-column-start: 1;
+        grid-column-end: 5;
+        grid-row-start: 1;
+        grid-row-end: 7;
+      }
+  }
+
+endsnippet
+
+snippet border "debug border"
+border : solid black 2px ;
+endsnippet
 	

@@ -1,6 +1,36 @@
 snippet btn-box "button box flex"
-<div className="btn-box">
-	<button>Inner Text</button>
+<div className="${1:btn-box}">
+	<button>$2</button>
 </div>
 endsnippet
 	
+snippet logv "log value (.)"
+console.log($1)
+endsnippet
+	
+snippet logs "log string ('.')"
+console.log('$1')
+endsnippet
+
+
+snippet isIn "function to check if is in" b
+let adv_r = document.getElementsByClassName('advantages');
+let adv = Array.from(adv_r)[0];
+let c_done = false ;
+
+//scrolling check and animate
+document.addEventListener('scroll', function() {
+  if (isIn(adv, c_done, 2)) {
+    c_done = true ;
+    }
+});
+function isIn(el, done, offset = 2) {
+  var bounding = el.getBoundingClientRect();
+  let wh = window.innerHeight
+  console.log( bounding.top < (wh - wh / offset))
+  return (
+       !( done ) &&  // check if has been done
+        ( bounding.top < (wh - wh / offset)) //this one check if it is more than half in the screen
+  );
+}
+endsnippet
