@@ -2,7 +2,6 @@ let mapleader = "\<Space>"
 let s:is_nvim = has('nvim')
 set t_Co=256
 
-
 "remmaping different part
 inoremap '' <Esc> :noh <CR>
 inoremap ,o <C-x><C-l>
@@ -16,42 +15,31 @@ map ts :vsplit
 nmap tp :tabp <CR>
 nmap te :tabedit
 nmap tn :tabn <CR>
-set pastetoggle=<F5>
-map <F1> :source ~/.config/nvim/init.vim <CR>
-nnoremap <silent> <C-w>o :ZoomToggle<CR>
-
-"map z-a  &foldlevel ? 'zM' :'zR'<CR>
-set foldmethod=manual
 nnoremap <Esc> :noh<CR>
 vmap <C-c> "+y
 
-" custom fun and better than multicursor
+set showmatch
+set relativenumber
+set ic "ignore case for the search
+
+
+" search and replace on dot
 function! Search_and_replace()
   let word = expand('<cword>')
   let @/ = word
 endfunction
 nnoremap rr :call Search_and_replace() <CR> cgn
 
-set showmatch
-set relativenumber
-set ic "ignore case for the search
 
 "disable the scratch preview
 set completeopt-=preview
 
+" Nerdcommenter keep spacing 
+let g:NERDDefaultAlign = 'start'
+
 "all the plugin
 call plug#begin('~/.vim/plugged')
 let g:plug_url_format = 'https://github.com/%s.git'
-
-Plug 'mogelbrod/vim-jsonpath'
-
-
-"get import size 
-Plug 'yardnsm/vim-import-cost', { 'do': 'npm install'  }
-
-"make the window full size 
-Plug 'markstory/vim-zoomwin'
-
 
 Plug 'aserebryakov/vim-todo-lists'
 Plug 'jiangmiao/auto-pairs'
@@ -72,52 +60,18 @@ Plug 'prettier/vim-prettier', { 'do': 'npm install',   'for': [
     \ 'php',
     \ 'html', ] }
 
-
-
 "emmet & for jsx
 Plug 'mattn/emmet-vim', { 'for': ['javascript', 'jsx', 'html', 'css', 'php'] }
+Plug 'maxmellon/vim-jsx-pretty'
+
 
 "for nerdtree
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' } "{{{
   nnoremap <silent> <F4> :NERDTreeToggle %<CR>
 "}}}
 
-"deoplete core
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
-if has('win32') || has('win64')
-  Plug 'tbodt/deoplete-tabnine', { 'do': 'powershell.exe .\install.ps1' }
-else
-  Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
-endif
-
-
-"autocomplete python
-Plug 'ternjs/tern_for_vim', { 'do': 'npm install && npm install -g tern’ ' }
-Plug 'deoplete-plugins/deoplete-jedi'
-Plug 'davidhalter/jedi-vim'
-Plug 'cespare/vim-toml'
-
-"autocomplete php
-Plug 'StanAngeloff/php.vim'
-
-"adding other file to the completion
-Plug 'Shougo/context_filetype.vim'
-
 " Track the engine.
 Plug 'SirVer/ultisnips'
-" " Snippets are separated from the engine. Add this if you want them:
-Plug 'honza/vim-snippets'
-Plug 'epilande/vim-react-snippets'
-"tentative of wp integration
-
-
-
 
 "for the linter
 Plug 'w0rp/ale'
@@ -131,13 +85,8 @@ Plug '/usr/local/opt/fzf'
 
 
 "colorscheme and styel
-Plug 'chuling/vim-equinusocio-material'
-Plug 'whatyouhide/vim-gotham'
-Plug 'arcticicestudio/nord-vim'
 Plug 'morhetz/gruvbox'
 Plug 'jacoborus/tender.vim'
-Plug 'vim-scripts/Zenburn'
-Plug 'kyoz/purify', { 'rtp': 'vim' }
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'Yggdroot/indentLine'
@@ -146,7 +95,19 @@ Plug 'Yggdroot/indentLine'
 Plug 'zivyangll/git-blame.vim'
 
 
+" Autocomplete " Use release branch (recommend)
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-tslint', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-lists', {'do': 'yarn install --frozen-lockfile'} " mru and stuff
+Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'} " color highlightingcall plug#end()
+
 call plug#end()
+
 
 " todo 
 let g:VimTodoListsDatesEnabled = 1
@@ -172,11 +133,6 @@ let g:ale_linters = {
   \}
 let g:ale_python_flake8_options = '--ignore=E501'
 let g:ale_python_flake8_options = '--ignore=E701'
-"i am ok with line a bit longer
-
-
-
-
 
 "this one is for the fixer
 let g:ale_linters_explicit = 1
@@ -193,29 +149,11 @@ let g:ale_fix_on_save = 0
 let g:ale_python_pep8_options = '--ignore=E501'
 let g:ale_python_pep8_options = '--ignore=E701'
 let g:ale_list_window_size = 5
-nnoremap <buffer> <leader>p :Prettier <CR>
-
-"function save and lint
-
-
-"this is for the autocomplet
-
-let g:deoplete#enable_at_startup=1
-let g:deoplete#auto_complete=1
-" adding other filetype
-if !exists('g:context_filetype#same_filetypes')
-  let g:context_filetype#same_filetypes = {}
-endif
-let g:context_filetype#same_filetypes.scss = 'html,javascript.jsx,php'
-let g:context_filetype#same_filetypes.css = 'html,javascript.jsx,php'
-
-"adding ultisnips to deoplete
-call deoplete#custom#source('ultisnips', 'tern', 'matchers', ['matcher_fuzzy'])
-"call deoplete#custom#source('ultisnips', 'tern', 'matchers')
-
 
 "easy motion shortcut
 nmap ss <Plug>(easymotion-overwin-f2)
+" prettier
+nnoremap <buffer> <leader>p :Prettier <CR>
 
 "all this is for fzf theme and shortcut
 let g:fzf_command_prefix = 'Fzf'
@@ -300,18 +238,16 @@ augroup quick_group
   autocmd filetype python setlocal tabstop=4 expandtab shiftwidth=4 softtabstop=4
   autocmd filetype cpp setlocal tabstop=4 expandtab shiftwidth=4 softtabstop=4
   "
-  autocmd filetype python nnoremap <buffer> <leader>p :ALEFix <CR>
-  autocmd filetype cpp nnoremap <buffer> <leader>p :ALEFix <CR>
+  autocmd filetype python nnoremap <buffer> <leader>p :ALEFix <CR> 
+  autocmd filetype cpp nnoremap <buffer> <leader>p :ALEFix <CR> 
   
   autocmd filetype yaml setlocal omnifunc=tern#complete
   autocmd bufwritepost * execute ':retab'
+  autocmd FileType json noremap <buffer> <silent> <leader>d :call jsonpath#echo()<CR> 
+  autocmd FileType json noremap <buffer> <silent> <leader>g :call jsonpath#goto()<CR>
 augroup END
 
-
-set bg=dark
-"colorscheme nord
-
-colorscheme gruvbox
+""""""""" ALECOMMENT
 let g:airline#extensions#ale#enabled = 1
 let g:airline_theme='tender'
 let g:indentLine_color_term = 'LightGrey'
@@ -331,21 +267,31 @@ function! LinterStatus() abort
     \   all_errors
     \)
 endfunction
-
+" Theme
+set bg=dark
+colorscheme gruvbox
+let g:indentLine_color_term = 'LightGrey'
 set statusline=%{LinterStatus()}
+set statusline^=%{coc#status()}
 
-
-nmap gd :vsplit <CR>:exec("tselect ".expand("<cword>"))<CR>
-"changing indent color
 "
-"
-" Optionally copy path to a named register (* in this case) when calling :JsonPath
-let g:jsonpath_register = 'j'
+" Coc settings
+" " Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
 
-" Define mappings for json buffers
-au FileType json noremap <buffer> <silent> <leader>d :call jsonpath#echo()<CR>
-au FileType json noremap <buffer> <silent> <leader>g :call jsonpath#goto()<CR>
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
 
+nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
+" Do default action for next item.
+nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 
-" Nerdcommenter keep spacing 
-let g:NERDDefaultAlign = 'start'
