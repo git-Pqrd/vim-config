@@ -215,7 +215,7 @@ call deoplete#custom#source('ultisnips', 'tern', 'matchers', ['matcher_fuzzy'])
 
 
 "easy motion shortcut
-nmap s <Plug>(easymotion-overwin-f2)
+nmap ss <Plug>(easymotion-overwin-f2)
 
 "all this is for fzf theme and shortcut
 let g:fzf_command_prefix = 'Fzf'
@@ -349,4 +349,3 @@ au FileType json noremap <buffer> <silent> <leader>g :call jsonpath#goto()<CR>
 
 " Nerdcommenter keep spacing 
 let g:NERDDefaultAlign = 'start'
-
